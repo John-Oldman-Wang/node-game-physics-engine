@@ -5,23 +5,17 @@ var DistanceSquared = require('../../math/distance/DistanceSquared');
 var Factory = require('./Factory');
 var GetFastValue = require('../../utils/object/GetFastValue');
 var Merge = require('../../utils/object/Merge');
-var PluginCache = require('../../plugins/PluginCache');
+// var PluginCache = require('../../plugins/PluginCache');
 var Vector2 = require('../../math/Vector2');
 var World = require('./World');
 
 var ArcadePhysics = new Class({
-  initialize: function ArcadePhysics(scene, config) {
-    this.scene = scene;
-
-    this.systems = scene.sys;
-
+  initialize: function ArcadePhysics(config) {
     this.config = config; //  || this.getConfig();
     this.world;
 
     this.add;
     this.boot();
-    // scene.sys.events.once('boot', this.boot, this);
-    // scene.sys.events.on('start', this.start, this);
   },
 
   boot: function() {
@@ -37,11 +31,11 @@ var ArcadePhysics = new Class({
       this.add = new Factory(this.world);
     }
 
-    var eventEmitter = this.systems.events;
+    // var eventEmitter = this.systems.events;
 
-    eventEmitter.on('update', this.world.update, this.world);
-    eventEmitter.on('postupdate', this.world.postUpdate, this.world);
-    eventEmitter.once('shutdown', this.shutdown, this);
+    // eventEmitter.on('update', this.world.update, this.world);
+    // eventEmitter.on('postupdate', this.world.postUpdate, this.world);
+    // eventEmitter.once('shutdown', this.shutdown, this);
   },
 
   getConfig: function() {
@@ -203,11 +197,11 @@ var ArcadePhysics = new Class({
       return;
     }
 
-    var eventEmitter = this.systems.events;
+    // var eventEmitter = this.systems.events;
 
-    eventEmitter.off('update', this.world.update, this.world);
-    eventEmitter.off('postupdate', this.world.postUpdate, this.world);
-    eventEmitter.off('shutdown', this.shutdown, this);
+    // eventEmitter.off('update', this.world.update, this.world);
+    // eventEmitter.off('postupdate', this.world.postUpdate, this.world);
+    // eventEmitter.off('shutdown', this.shutdown, this);
 
     this.add.destroy();
     this.world.destroy();
@@ -226,6 +220,6 @@ var ArcadePhysics = new Class({
   }
 });
 
-PluginCache.register('ArcadePhysics', ArcadePhysics, 'arcadePhysics');
+// PluginCache.register('ArcadePhysics', ArcadePhysics, 'arcadePhysics');
 
 module.exports = ArcadePhysics;

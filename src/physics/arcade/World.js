@@ -31,7 +31,7 @@ var World = new Class({
   initialize: function World(scene, config) {
     EventEmitter.call(this);
 
-    this.scene = scene;
+    // this.scene = scene;
 
     this.bodies = new Set();
 

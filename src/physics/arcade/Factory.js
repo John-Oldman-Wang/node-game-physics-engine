@@ -9,9 +9,9 @@ var Factory = new Class({
   initialize: function Factory(world) {
     this.world = world;
 
-    this.scene = world.scene;
+    // this.scene = world.scene;
 
-    this.sys = world.scene.sys;
+    // this.sys = world.scene.sys;
   },
 
   collider: function(object1, object2, collideCallback, processCallback, callbackContext) {
@@ -33,7 +33,7 @@ var Factory = new Class({
   staticImage: function(x, y, key, frame) {
     var image = new ArcadeImage(this.scene, x, y, key, frame);
 
-    this.sys.displayList.add(image);
+    // this.sys.displayList.add(image);
 
     this.world.enableBody(image, CONST.STATIC_BODY);
 
@@ -42,8 +42,50 @@ var Factory = new Class({
 
   image: function(x, y, key, frame, width, height) {
     var image = new ArcadeImage(this.scene, x, y, key, frame, width, height);
+    console.log({
+      x,
+      y,
+      width,
+      height
+    });
+    if (true) {
+      const { x, y, width, height, angle, scaleX, scaleY, frame, parentContainer, displayOriginX, displayOriginY } = image;
+      console.log({ x, y, width, height, angle, scaleX, scaleY, frame, parentContainer, displayOriginX, displayOriginY });
+    }
+    console.log();
+    const getSet = new Set();
+    const setSet = new Set();
+    const getObj = {};
+    const setObj = {};
+    setTimeout(() => {
+      console.log({ getObj, setObj });
+    }, 3000);
 
-    this.world.enableBody(image, CONST.DYNAMIC_BODY);
+    const iProxy = new Proxy(image, {
+      get: function(target, key) {
+        if (!getSet.has(key)) {
+          console.log(`get ${key}`);
+          getSet.add(key);
+          getObj[key] = 1;
+        } else {
+          getObj[key] += 1;
+        }
+
+        return target[key];
+      },
+      set: function(target, key, value) {
+        if (!setSet.has(key)) {
+          console.log(`set ${key} ${value}`);
+          setSet.add(key);
+          setObj[key] = 1;
+        } else {
+          setObj[key] += 1;
+        }
+        return (target[key] = value);
+      }
+    });
+
+    this.world.enableBody(iProxy || image, CONST.DYNAMIC_BODY);
 
     return image;
   },
@@ -51,8 +93,8 @@ var Factory = new Class({
   staticSprite: function(x, y, key, frame) {
     var sprite = new ArcadeSprite(this.scene, x, y, key, frame);
 
-    this.sys.displayList.add(sprite);
-    this.sys.updateList.add(sprite);
+    // this.sys.displayList.add(sprite);
+    // this.sys.updateList.add(sprite);
 
     this.world.enableBody(sprite, CONST.STATIC_BODY);
 
@@ -62,21 +104,21 @@ var Factory = new Class({
   sprite: function(x, y, key, frame) {
     var sprite = new ArcadeSprite(this.scene, x, y, key, frame);
 
-    this.sys.displayList.add(sprite);
-    this.sys.updateList.add(sprite);
+    // this.sys.displayList.add(sprite);
+    // this.sys.updateList.add(sprite);
 
     this.world.enableBody(sprite, CONST.DYNAMIC_BODY);
 
     return sprite;
   },
 
-  staticGroup: function(children, config) {
-    return this.sys.updateList.add(new StaticPhysicsGroup(this.world, this.world.scene, children, config));
-  },
+  // staticGroup: function(children, config) {
+  //   return this.sys.updateList.add(new StaticPhysicsGroup(this.world, this.world.scene, children, config));
+  // },
 
-  group: function(children, config) {
-    return this.sys.updateList.add(new PhysicsGroup(this.world, this.world.scene, children, config));
-  },
+  // group: function(children, config) {
+  //   return this.sys.updateList.add(new PhysicsGroup(this.world, this.world.scene, children, config));
+  // },
 
   destroy: function() {
     this.world = null;

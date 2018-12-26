@@ -1,8 +1,7 @@
 const ArcadePhysisc = require('./src/physics/arcade/ArcadePhysics');
-const Scene = require('./src/scene/Scene');
 
 function index(config) {
-  return new ArcadePhysisc(new Scene(), config);
+  return new ArcadePhysisc(config);
 }
 
 module.exports = index;

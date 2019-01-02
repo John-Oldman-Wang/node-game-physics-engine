@@ -25,12 +25,18 @@ var Image = new Class({
     ImageRender
   ],
 
-  initialize: function Image(scene, x, y, texture, frame, width = 0, height = 0) {
+  initialize: function Image(scene, x, y, width = 0, height = 0) {
     GameObject.call(this, scene, 'Image');
 
     this._crop = this.resetCropObject();
 
-    this.setTexture(texture, frame);
+    // this.setTexture(texture, frame);
+    this.frame = {
+      realWidth: width,
+      realHeight: height,
+      width,
+      height
+    };
     this.setPosition(x, y);
     this.setSizeToFrame({
       realWidth: width,

@@ -40,52 +40,52 @@ var Factory = new Class({
     return image;
   },
 
-  image: function(x, y, key, frame, width, height) {
-    var image = new ArcadeImage(this.scene, x, y, key, frame, width, height);
-    console.log({
-      x,
-      y,
-      width,
-      height
-    });
-    if (true) {
-      const { x, y, width, height, angle, scaleX, scaleY, frame, parentContainer, displayOriginX, displayOriginY } = image;
-      console.log({ x, y, width, height, angle, scaleX, scaleY, frame, parentContainer, displayOriginX, displayOriginY });
-    }
-    console.log();
-    const getSet = new Set();
-    const setSet = new Set();
-    const getObj = {};
-    const setObj = {};
-    setTimeout(() => {
-      console.log({ getObj, setObj });
-    }, 3000);
+  image: function(x, y, width, height) {
+    var image = new ArcadeImage(this.scene, x, y, width, height);
+    // console.log({
+    //   x,
+    //   y,
+    //   width,
+    //   height
+    // });
+    // if (true) {
+    //   const { x, y, width, height, angle, scaleX, scaleY, frame, parentContainer, displayOriginX, displayOriginY } = image;
+    //   console.log({ x, y, width, height, angle, scaleX, scaleY, frame, parentContainer, displayOriginX, displayOriginY });
+    // }
+    // console.log();
+    // const getSet = new Set();
+    // const setSet = new Set();
+    // const getObj = {};
+    // const setObj = {};
+    // setTimeout(() => {
+    //   console.log({ getObj, setObj });
+    // }, 3000);
 
-    const iProxy = new Proxy(image, {
-      get: function(target, key) {
-        if (!getSet.has(key)) {
-          console.log(`get ${key}`);
-          getSet.add(key);
-          getObj[key] = 1;
-        } else {
-          getObj[key] += 1;
-        }
+    // const iProxy = new Proxy(image, {
+    //   get: function(target, key) {
+    //     if (!getSet.has(key)) {
+    //       console.log(`get ${key}`);
+    //       getSet.add(key);
+    //       getObj[key] = 1;
+    //     } else {
+    //       getObj[key] += 1;
+    //     }
 
-        return target[key];
-      },
-      set: function(target, key, value) {
-        if (!setSet.has(key)) {
-          console.log(`set ${key} ${value}`);
-          setSet.add(key);
-          setObj[key] = 1;
-        } else {
-          setObj[key] += 1;
-        }
-        return (target[key] = value);
-      }
-    });
+    //     return target[key];
+    //   },
+    //   set: function(target, key, value) {
+    //     if (!setSet.has(key)) {
+    //       console.log(`set ${key} ${value}`);
+    //       setSet.add(key);
+    //       setObj[key] = 1;
+    //     } else {
+    //       setObj[key] += 1;
+    //     }
+    //     return (target[key] = value);
+    //   }
+    // });
 
-    this.world.enableBody(iProxy || image, CONST.DYNAMIC_BODY);
+    this.world.enableBody(image, CONST.DYNAMIC_BODY);
 
     return image;
   },

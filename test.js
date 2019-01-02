@@ -9,7 +9,7 @@ const p = index({
   debug: false
 });
 
-const ball = p.add.image(376, 667, 'game', 'ball.png', 32, 31);
+const ball = p.add.image(376, 667, 32, 31);
 
 p.world.setBoundsCollision(true, true, true, true);
 
@@ -19,11 +19,12 @@ ball.setOrigin(0.5, 1);
 ball.setBounce(1, 1);
 ball.setCollideWorldBounds(true);
 
+console.log(ball.x, ball.y);
+
 for (let i = 0; i < 1000; i++) {
   p.world.step(16 / 1000);
 }
 
-console.log(ball.x, ball.y);
 console.log(ball.body.top, ball.body.height, ball.body.bottom);
 
 // function concat(...args) {

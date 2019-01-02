@@ -20,8 +20,8 @@ var ArcadeImage = new Class({
     Components.Velocity
   ],
 
-  initialize: function ArcadeImage(scene, x, y, texture, frame, width, height) {
-    Image.call(this, scene, x, y, texture, frame, width, height);
+  initialize: function ArcadeImage(scene, x, y, width, height) {
+    Image.call(this, scene, x, y, width, height);
     this.body = null;
   }
 });
